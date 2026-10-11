@@ -63,9 +63,10 @@
 
 ### M0の検証結果
 
-- `npm ci`、`npm test`（API 5件、Web 2件）、`npm run typecheck`、`npm run build` が成功。
+- `npm ci`、`npm test`（API 8件、Web 2件）、`npm run typecheck`、`npm run build` が成功。
 - PostgreSQLへ初期マイグレーションを適用し、再実行で既存データを保持することを確認。
 - API直結とViteプロキシ経由の `/api/health` がともに `{"status":"ok","database":"ok"}` を返した。
+- DB停止・再起動時にAPIが落ちず、ヘルス応答が200→503→200へ戻ることを確認。
 - 390px幅のローカルChromeで、10訪問の一覧、同じ場所の3訪問、入力プレビュー、横スクロールなしを確認。画面は架空データ専用で、保存はM1。
 
 ## M1：記録できる

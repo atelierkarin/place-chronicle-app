@@ -21,3 +21,14 @@ describe('GET /api/health', () => {
     })
   })
 })
+
+describe('unknown API paths', () => {
+  it('returns the standard JSON error envelope', async () => {
+    const response = await createApp(vi.fn()).request('/api/missing')
+
+    expect(response.status).toBe(404)
+    expect(await response.json()).toEqual({
+      error: { code: 'not_found', message: 'Resource not found' },
+    })
+  })
+})

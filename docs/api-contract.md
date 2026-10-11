@@ -7,7 +7,7 @@
 - JSONのキーは `camelCase`、IDはUUID文字列、日時はオフセットを含むISO 8601文字列。DBには `timestamptz` で保存する。
 - 作成・更新日時はサーバーが付与する。更新APIは `updatedAt` を変更する。
 - `Content-Type: application/json` を使う。画像だけ `multipart/form-data`。
-- 未指定の任意項目は `null`、空欄の本文は `""` として返す。日時の返却はUTCの `Z` 表記に統一する。
+- 未指定の任意項目は `null`。Visitの `text` だけは未指定・`null`・空文字をすべて `""` として保存・返却する。日時の返却はUTCの `Z` 表記に統一する。
 - エラーは `{ "error": { "code": "validation_error", "message": "...", "fields": { "name": "..." } } }`。`fields` は入力エラー時のみ。未検出は404、競合は409、入力不正は400、DB障害は503。
 - 一覧は `limit`（既定20、最大50）と不透明な `cursor` を使う。返り値は `{ "items": [...], "nextCursor": string | null }`。訪問は `visitedAt DESC, id DESC`、場所は `createdAt DESC, id DESC`。無効なcursorは400。
 - PlaceとVisitの削除は関連数を画面に示して確認する。DBの外部キーは `RESTRICT`。MVPでは子レコードが残るPlace/Visitの削除は409で拒否し、先に子レコードを削除する。Photo削除は原本・サムネイルを消す。

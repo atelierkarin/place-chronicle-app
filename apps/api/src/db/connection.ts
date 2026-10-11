@@ -8,6 +8,10 @@ export const pool = new Pool({
   database: process.env.POSTGRES_DB,
 })
 
+pool.on('error', (error) => {
+  console.error('Idle database connection error:', error.message)
+})
+
 export async function checkDatabase(): Promise<void> {
   await pool.query('SELECT 1')
 }

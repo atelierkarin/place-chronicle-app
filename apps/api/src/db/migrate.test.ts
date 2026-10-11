@@ -72,4 +72,46 @@ describe('initial schema migration', () => {
       client.query('DELETE FROM places WHERE id = $1', [place.rows[0].id]),
     ).rejects.toMatchObject({ code: '23503' })
   })
+
+  it('protects photo references and validates photo metadata', async () => {
+    await expect(
+      client.query(
+        "INSERT INTO photos (visit_id, storage_key, original_filename, mime_type, byte_size, sort_order) VALUES ($1, 'missing.jpg', 'missing.jpg', 'image/jpeg', 1, 0)",
+        [randomUUID()],
+      ),
+    ).rejects.toMatchObject({ code: '23503' })
+
+    const place = await client.query<{ id: string }>(
+      "INSERT INTO places (name, latitude, longitude) VALUES ('架空の広場', 0, 0) RETURNING id",
+    )
+    const visit = await client.query<{ id: string }>(
+      'INSERT INTO visits (place_id, visited_at) VALUES ($1, now()) RETURNING id',
+      [place.rows[0].id],
+    )
+    await expect(
+      client.query(
+        "INSERT INTO photos (visit_id, storage_key, original_filename, mime_type, byte_size, sort_order) VALUES ($1, 'negative.jpg', 'negative.jpg', 'image/jpeg', -1, 0)",
+        [visit.rows[0].id],
+      ),
+    ).rejects.toMatchObject({ code: '23514' })
+    await expect(
+      client.query(
+        "INSERT INTO photos (visit_id, storage_key, original_filename, mime_type, byte_size, sort_order) VALUES ($1, 'order.jpg', 'order.jpg', 'image/jpeg', 1, -1)",
+        [visit.rows[0].id],
+      ),
+    ).rejects.toMatchObject({ code: '23514' })
+    await expect(
+      client.query(
+        "INSERT INTO photos (visit_id, storage_key, original_filename, mime_type, byte_size, sort_order, width) VALUES ($1, 'width.jpg', 'width.jpg', 'image/jpeg', 1, 0, 0)",
+        [visit.rows[0].id],
+      ),
+    ).rejects.toMatchObject({ code: '23514' })
+    await client.query(
+      "INSERT INTO photos (visit_id, storage_key, original_filename, mime_type, byte_size, sort_order) VALUES ($1, 'valid.jpg', 'valid.jpg', 'image/jpeg', 1, 0)",
+      [visit.rows[0].id],
+    )
+    await expect(
+      client.query('DELETE FROM visits WHERE id = $1', [visit.rows[0].id]),
+    ).rejects.toMatchObject({ code: '23503' })
+  })
 })
