@@ -1,0 +1,29 @@
+{
+  "name": "place-chronicle",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev -w @place-chronicle/api",
+    "dev:web": "npm run dev -w @place-chronicle/web",
+    "typecheck": "npm run typecheck --workspaces",
+    "test": "npm run test --workspaces",
+    "build": "npm run build --workspaces",
+    "format": "prettier --write apps/api/src apps/web/src",
+    "format:check": "prettier --check apps/api/src apps/web/src",
+    "db:migrate": "npm run db:migrate -w @place-chronicle/api"
+  },
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "prettier": "^3.9.10",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  }
+}
