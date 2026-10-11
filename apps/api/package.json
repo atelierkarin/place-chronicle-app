@@ -1,0 +1,20 @@
+{
+  "name": "@place-chronicle/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --env-file=../../.env --import=tsx --watch src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --env-file=../../.env ../../node_modules/vitest/vitest.mjs run",
+    "build": "tsc -p tsconfig.build.json",
+    "db:migrate": "node --env-file=../../.env --import=tsx src/db/migrate-cli.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.4",
+    "hono": "^4.13.13",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.23.1"
+  }
+}

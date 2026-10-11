@@ -1,0 +1,438 @@
+:root {
+  font-family: system-ui, 'Yu Gothic', Meiryo, sans-serif;
+  color: #28372e;
+  background: #f8f7f2;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+}
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: #193b31;
+  color: #edf4e9;
+  padding: 34px 24px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.brand {
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.brand-mark {
+  color: #c7db9e;
+  font-size: 36px;
+  line-height: 1;
+}
+.sidebar-label {
+  font-size: 11px;
+  color: #bdcec0;
+  letter-spacing: 0.07em;
+  margin: 18px 0 62px;
+}
+.nav-list {
+  display: grid;
+  gap: 8px;
+}
+.nav-list button {
+  border: 0;
+  background: none;
+  color: #d2e1d5;
+  text-align: left;
+  padding: 14px 15px;
+  border-radius: 10px;
+  font-size: 14px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.nav-list button.active,
+.nav-list button:hover {
+  background: #31574a;
+  color: white;
+}
+.nav-list button span {
+  font-weight: 600;
+}
+.sidebar-bottom {
+  font-size: 12px;
+  margin-top: auto;
+  color: #d7e5d9;
+  line-height: 1.8;
+}
+.sidebar-bottom small {
+  display: block;
+  color: #a5baa9;
+  margin-left: 15px;
+}
+.status-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d7c36b;
+  margin-right: 8px;
+}
+.status-dot.connected {
+  background: #9dd08d;
+}
+.status-dot.offline {
+  background: #dc8e80;
+}
+.main-content {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 38px 6vw 90px;
+}
+.prototype-note {
+  font-size: 11px;
+  color: #796d50;
+  background: #f0eadb;
+  border: 1px solid #e7dfcc;
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 999px;
+}
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  padding: 65px 0 60px;
+  border-bottom: 1px solid #dbded5;
+  gap: 25px;
+}
+.eyebrow {
+  font-size: 11px;
+  color: #789071;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+.page-header h1 {
+  font-size: clamp(32px, 4vw, 56px);
+  letter-spacing: -0.06em;
+  line-height: 1.37;
+  margin: 20px 0;
+}
+.page-header p {
+  font-size: 14px;
+  color: #6d756e;
+  margin: 0;
+}
+.header-count {
+  text-align: right;
+  white-space: nowrap;
+  padding-bottom: 6px;
+}
+.header-count strong {
+  font-size: 54px;
+  font-weight: 500;
+  line-height: 1;
+  display: block;
+  color: #577b58;
+}
+.header-count span {
+  font-size: 12px;
+  color: #7c8879;
+}
+.section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 42px 0 20px;
+}
+.section-heading h2 {
+  font-size: 18px;
+  margin: 0;
+}
+.section-heading span {
+  font-size: 12px;
+  color: #879087;
+}
+.visit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.visit-card {
+  background: #fff;
+  border: 1px solid #e8e9df;
+  border-radius: 14px;
+  padding: 24px;
+  min-height: 190px;
+  box-shadow: 0 6px 30px #253a2810;
+}
+.visit-date {
+  font-size: 12px;
+  color: #728b6d;
+  font-weight: 700;
+  margin-bottom: 13px;
+}
+.place-title {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: #254337;
+  font-size: 21px;
+  font-weight: 700;
+  text-align: left;
+}
+.place-title span {
+  font-size: 14px;
+  color: #8ca792;
+}
+.place-title:hover {
+  text-decoration: underline;
+}
+.visit-meta {
+  font-size: 11px;
+  color: #89958a;
+  margin-top: 7px;
+}
+.visit-card p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #57665a;
+  margin: 21px 0 0;
+}
+.place-list {
+  background: #fff;
+  border: 1px solid #e8e9df;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.place-row {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid #edf0e8;
+  background: #fff;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-align: left;
+  color: #2a3f30;
+}
+.place-row:last-child {
+  border-bottom: 0;
+}
+.place-row:hover {
+  background: #f6f9f3;
+}
+.place-row > span:first-child {
+  flex: 1;
+}
+.place-row strong {
+  display: block;
+  font-size: 16px;
+}
+.place-row small {
+  display: block;
+  font-size: 11px;
+  color: #829083;
+  margin-top: 5px;
+}
+.visit-badge {
+  font-size: 11px;
+  background: #eaf1e7;
+  color: #56775a;
+  padding: 6px 10px;
+  border-radius: 20px;
+}
+.back-button {
+  background: none;
+  border: 0;
+  color: #658069;
+  padding: 28px 0 0;
+  font-size: 13px;
+}
+.detail-header {
+  padding-top: 36px;
+}
+.draft-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(230px, 0.8fr);
+  gap: 26px;
+  margin-top: 38px;
+}
+.draft-form,
+.preview-panel {
+  background: #fff;
+  border: 1px solid #e8e9df;
+  border-radius: 14px;
+  padding: 30px;
+}
+.draft-form label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 23px;
+  color: #506454;
+}
+.draft-form select,
+.draft-form input,
+.draft-form textarea {
+  display: block;
+  width: 100%;
+  margin-top: 9px;
+  border: 1px solid #d4ddd0;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fcfdfb;
+  color: #2b4235;
+  outline-color: #71956d;
+}
+.draft-form textarea {
+  resize: vertical;
+}
+.primary-button {
+  background: #315c48;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  padding: 13px 22px;
+  font-weight: 700;
+}
+.primary-button:hover {
+  background: #234d3a;
+}
+.form-note {
+  font-size: 11px;
+  color: #8b9185;
+  margin: 14px 0 0;
+}
+.preview-panel {
+  background: #f0f4eb;
+}
+.preview-panel h2 {
+  font-size: 22px;
+  margin: 24px 0 8px;
+}
+.preview-panel span,
+.preview-panel p {
+  font-size: 13px;
+  color: #657467;
+  line-height: 1.8;
+}
+@media (max-width: 850px) {
+  .sidebar {
+    width: 76px;
+    padding: 30px 14px;
+  }
+  .brand {
+    justify-content: center;
+  }
+  .brand > span:last-child,
+  .sidebar-label,
+  .nav-list button span,
+  .sidebar-bottom {
+    display: none;
+  }
+  .nav-list {
+    margin-top: 60px;
+  }
+  .nav-list button {
+    justify-content: center;
+    font-size: 20px;
+  }
+  .main-content {
+    padding: 30px 5vw 90px;
+  }
+}
+@media (max-width: 620px) {
+  .app-shell {
+    display: block;
+  }
+  .sidebar {
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 0;
+    height: 65px;
+    padding: 8px 16px;
+  }
+  .brand,
+  .sidebar-label,
+  .sidebar-bottom {
+    display: none;
+  }
+  .nav-list {
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    gap: 4px;
+  }
+  .nav-list button {
+    font-size: 18px;
+    padding: 9px 12px;
+    display: block;
+    text-align: center;
+  }
+  .nav-list button span {
+    display: block;
+    font-size: 10px;
+    line-height: 1.1;
+  }
+  .main-content {
+    padding: 23px 20px 100px;
+  }
+  .page-header {
+    padding: 44px 0 34px;
+  }
+  .page-header h1 {
+    font-size: 34px;
+    margin: 16px 0;
+  }
+  .header-count strong {
+    font-size: 37px;
+  }
+  .header-count span {
+    font-size: 10px;
+  }
+  .visit-grid,
+  .draft-layout {
+    grid-template-columns: 1fr;
+  }
+  .visit-card {
+    min-height: 160px;
+  }
+  .section-heading {
+    margin-top: 31px;
+  }
+  .draft-form,
+  .preview-panel {
+    padding: 22px;
+  }
+  .place-row {
+    padding: 18px 15px;
+    gap: 10px;
+  }
+  .visit-badge {
+    white-space: nowrap;
+  }
+}
