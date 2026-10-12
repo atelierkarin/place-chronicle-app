@@ -1,6 +1,6 @@
 # Place Chronicle API契約 v0.1
 
-この文書はM0時点のM1/M2向け契約です。実装済みエンドポイントは `GET /api/health` のみです。ベースURLはローカルの `http://127.0.0.1:3000` とし、外部公開しません。
+この文書はM1時点のAPI契約です。下記の場所・訪問・写真エンドポイントを実装しました。ベースURLはローカルの `http://127.0.0.1:3000` とし、外部公開しません。
 
 ## 共通ルール
 
@@ -10,7 +10,7 @@
 - 未指定の任意項目は `null`。Visitの `text` だけは未指定・`null`・空文字をすべて `""` として保存・返却する。日時の返却はUTCの `Z` 表記に統一する。
 - エラーは `{ "error": { "code": "validation_error", "message": "...", "fields": { "name": "..." } } }`。`fields` は入力エラー時のみ。未検出は404、競合は409、入力不正は400、DB障害は503。
 - 一覧は `limit`（既定20、最大50）と不透明な `cursor` を使う。返り値は `{ "items": [...], "nextCursor": string | null }`。訪問は `visitedAt DESC, id DESC`、場所は `createdAt DESC, id DESC`。無効なcursorは400。
-- PlaceとVisitの削除は関連数を画面に示して確認する。DBの外部キーは `RESTRICT`。MVPでは子レコードが残るPlace/Visitの削除は409で拒否し、先に子レコードを削除する。Photo削除は原本・サムネイルを消す。
+- PlaceとVisitの削除は関連数を画面に示して確認する。DBの外部キーは `RESTRICT`。MVPでは子レコードが残るPlace/Visitの削除は409で拒否し、先に子レコードを削除する。409応答は `error.count` に子の件数を含む。Photo削除は原本・サムネイルを消す。
 
 ## モデル
 
@@ -52,9 +52,13 @@ Place詳細はPlace返却値に `visitCount` を加える。Visit詳細はVisit�
 | PATCH | `/api/visits/:id` | `visitedAt`/`text` の一部。場所移動はMVPでは対象外 |
 | DELETE | `/api/visits/:id` | 子Photoがなければ204。子があれば409と件数 |
 | POST | `/api/visits/:id/photos` | `multipart/form-data` の `files`。アップロード後のPhoto一覧を返す |
+| GET | `/api/photos/:id/file` | `variant=original` または `thumbnail`。省略時はthumbnail。ローカル利用向け画像バイト列 |
+| PATCH | `/api/photos/:id` | `sortOrder`（0以上の整数）または `caption`（1000文字以内）を更新。更新後のPhotoを返す |
 | DELETE | `/api/photos/:id` | メタデータ・原本・サムネイルを削除し204 |
 
 `yearMonth` を指定する場合は `timeZone` も必須とし、そのタイムゾーンの月初から翌月初までを検索する。無効なIANA名は400。M0の架空データ画面はAPIを呼ばず、この契約の実装はM1から始める。
+
+Photoの返却値には、原本・サムネイルを取得する `originalUrl` と `thumbnailUrl` を含める。写真の並び順変更には `PATCH /api/photos/:id` を使う。画像ファイルはローカルホストでのみ配信する。
 
 ## 写真
 
